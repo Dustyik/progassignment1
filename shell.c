@@ -15,6 +15,12 @@ int shellFind(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellFind if execvp fails to allow loop to continue
 
+  //EXECVP ONLT RETURNS A VALUE IF AN ERROR OCCURS, ALSO REMEMBER TO CHANGE THE WORKING DIRECTORY YOU ARE IN
+  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/find", args);
+  if (i == -1){
+    printf("FILE DOES NOT EXIST\n");
+  }
+
   return 1;
 }
 
@@ -31,6 +37,11 @@ int shellDisplayFile(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellDisplayFile if execvp fails to allow loop to continue
+
+  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/display", args);
+  if (i == -1){
+    printf("UNABLE TO DISPLAY\n");
+  }
 
   return 1;
 }
@@ -50,7 +61,11 @@ int shellListDirAll(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellListDirAll if execvp fails to allow loop to continue
 
-  return 1;
+
+  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/listdirall", args);
+  if (i == -1){
+    printf("DIRECTORY NOT FOUND\n");
+  }  return 1;
 }
 
 /*
@@ -66,6 +81,11 @@ int shellListDir(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellListDir
+
+  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/listdir", args);
+  if (i == -1){
+    printf("DIRECTORY NOT FOUND\n");
+  }
 
   return 1;
 }
@@ -85,6 +105,11 @@ int shellCountLine(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellCountLine if execvp fails to allow loop to continue
 
+  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/countline", args);
+  if (i == -1){
+    printf("UNABLE TO COUNTLINE\n");
+  }
+
   return 1;
 }
 
@@ -101,6 +126,11 @@ int shellSummond(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellDaemonize if execvp fails to allow loop to continue
+
+  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/summond", args);
+  if (i == -1){
+    printf("UNABLE TO SUMMOND\n");
+  }
 
   return 1;
 }
@@ -120,6 +150,11 @@ int shellCheckDaemon(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellCheckDaemon if execvp fails to allow loop to continue
+
+  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/checkdaemon", args);
+  if (i == -1){
+    printf("UNABLE TO CHECKDAEMON\n");
+  }
 
   return 1;
 }
@@ -260,7 +295,7 @@ int shellExecuteInput(char **args)
   //int i;
   // 2. Otherwise, check if args[0] is in any of our builtin_commands, and that it is NOT cd, help, exit, or usage.
   //if(strcmp(args[0], builtin_commands[i]) == 0){ //returns 0 if the strings are identical
-  if(strcmp(args[0], "help") == 0){
+  if(strcmp(args[0], "cd") == 0){
     return shellCD(args);
   }
   else if (strcmp(args[0], "exit") == 0){
@@ -280,7 +315,6 @@ int shellExecuteInput(char **args)
   }else if (pid == 0){
     //CURRENTLY IN CHILD FORK
       // 4. For the child process, execute the appropriate functions depending on the command in args[0]. Pass char ** args to the function.
-    printf("Currently in Fork Child\n");
     if(strcmp(args[0], "display") == 0){
       return shellDisplayFile(args);
     }
@@ -305,14 +339,15 @@ int shellExecuteInput(char **args)
     
   }else if (pid > 0){
     //CURRENLT IN PARENT FORK
+    printf("Fork works, currently waiting for child\n");
+
     waitpid(pid, stat_loc, WUNTRACED);
     return 1;
     //break;  
    }
   }
 
-
-  printf("NO SUCH COMMAND EXIT! \n");
+  printf("NO SUCH COMMAND EXIST! \n");
   
   return 0;
   }
@@ -325,9 +360,6 @@ char *shellReadLine(void)
   /** TASK 1 **/
   // read one line from stdin using getline()
 
-  // 3. Fetch an entire line from input stream stdin using getline() function. getline() will store user input onto the memory location allocated in (1)
-  // 4. Return the char*
-
   //size_t is a type used to hold the size of the object
   // 1. Allocate a memory space to contain the string of input from stdin using malloc. Malloc should return a char* that persists even after this function terminates.
   size_t size = SHELL_BUFFERSIZE;
@@ -336,6 +368,9 @@ char *shellReadLine(void)
   if(buffer == NULL){
     exit(1);
   }else{
+    // 3. Fetch an entire line from input stream stdin using getline() function. getline() will store user input onto the memory location allocated in (1)
+    // 4. Return the char*
+
     getline(&buffer, &size, stdin);
     return buffer;
     //buffer is the first character position where the input string will be stored
@@ -400,6 +435,19 @@ void shellLoop(void)
   // 6. free memory location containing the strings of characters
   // 7. free memory location containing char* to the first letter of each word in the input string
   // 8. check if shellExecuteInput returns 1. If yes, loop back to Step 1 and prompt user with new input. Otherwise, exit the shell. 
+  int loop = 1;
+  while (loop){
+    printf("custom_shell> ");
+    fflush(stdout);
+    line = shellReadLine();
+    args = shellTokenizeInput(line);
+    status = shellExecuteInput(args);
+    free(line);
+    free(args);
+    if (status == 0){
+      loop = 0;
+    }
+  }
 
 
 }
@@ -409,17 +457,11 @@ int main(int argc, char **argv)
  
  printf("Shell Run successful. Running now: \n");
  
- char* line = shellReadLine();
- printf("The fetched line is : %s \n", line);
- 
- char** args = shellTokenizeInput(line);
- printf("The first token is %s \n", args[0]);
- printf("The second token is %s \n", args[1]);
- 
- shellExecuteInput(args);
- 
+ // Run command loop
+ shellLoop();
  return 0;
 }
+
 
 
 
