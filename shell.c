@@ -16,7 +16,7 @@ int shellFind(char **args)
   // 5. return 1 to the caller of shellFind if execvp fails to allow loop to continue
 
   //EXECVP ONLT RETURNS A VALUE IF AN ERROR OCCURS, ALSO REMEMBER TO CHANGE THE WORKING DIRECTORY YOU ARE IN
-  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/find", args);
+  int i = execvp("/Users/roychua/Documents/Github/progassignment1/shellPrograms/find", args);
   if (i == -1){
     printf("FILE DOES NOT EXIST\n");
   }
@@ -38,7 +38,7 @@ int shellDisplayFile(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellDisplayFile if execvp fails to allow loop to continue
 
-  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/display", args);
+  int i = execvp("/Users/roychua/Documents/Github/progassignment1/shellPrograms/display", args);
   if (i == -1){
     printf("UNABLE TO DISPLAY\n");
   }
@@ -62,7 +62,7 @@ int shellListDirAll(char **args)
   // 5. return 1 to the caller of shellListDirAll if execvp fails to allow loop to continue
 
 
-  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/listdirall", args);
+  int i = execvp("/Users/roychua/Documents/Github/progassignment1/shellPrograms/listdirall", args);
   if (i == -1){
     printf("DIRECTORY NOT FOUND\n");
   }  return 1;
@@ -82,7 +82,7 @@ int shellListDir(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellListDir
 
-  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/listdir", args);
+  int i = execvp("/Users/roychua/Documents/Github/progassignment1/shellPrograms/listdir", args);
   if (i == -1){
     printf("DIRECTORY NOT FOUND\n");
   }
@@ -105,7 +105,7 @@ int shellCountLine(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellCountLine if execvp fails to allow loop to continue
 
-  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/countline", args);
+  int i = execvp("/Users/roychua/Documents/Github/progassignment1/shellPrograms/countline", args);
   if (i == -1){
     printf("UNABLE TO COUNTLINE\n");
   }
@@ -127,7 +127,7 @@ int shellSummond(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellDaemonize if execvp fails to allow loop to continue
 
-  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/summond", args);
+  int i = execvp("/Users/roychua/Documents/Github/progassignment1/shellPrograms/summond", args);
   if (i == -1){
     printf("UNABLE TO SUMMOND\n");
   }
@@ -151,7 +151,7 @@ int shellCheckDaemon(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellCheckDaemon if execvp fails to allow loop to continue
 
-  int i = execvp("/Users/Dustyik/Desktop/progassignment1/shellPrograms/checkdaemon", args);
+  int i = execvp("/Users/roychua/Documents/Github/progassignment1/shellPrograms/checkdaemon", args);
   if (i == -1){
     printf("UNABLE TO CHECKDAEMON\n");
   }
